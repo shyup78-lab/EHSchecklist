@@ -143,6 +143,9 @@
   .results-head .total{
     font-size:12.5px; font-weight:700; color:var(--blue);
   }
+  .career-hint{
+    padding:8px 20px 0; font-size:11.5px; color:var(--gray-light);
+  }
   .results-body{padding:14px; display:flex; flex-direction:column; gap:10px; max-height:420px; overflow-y:auto;}
 
   .card{
@@ -179,11 +182,12 @@
   .ind-chip summary{
     list-style:none; cursor:pointer;
     font-size:11.5px; font-weight:600; color:var(--blue-dark); background:var(--blue-tint);
+    border:1px solid #C7D7EE;
     padding:3px 9px; border-radius:100px; display:inline-flex; align-items:center; gap:4px;
   }
   .ind-chip summary::-webkit-details-marker{display:none;}
-  .ind-chip summary::after{content:"▾"; font-size:9px; opacity:0.6;}
-  .ind-chip[open] summary{background:var(--blue-dark); color:#fff;}
+  .ind-chip summary::after{content:"▾"; font-size:14px; opacity:0.8; line-height:1;}
+  .ind-chip[open] summary{background:var(--blue-dark); border-color:var(--blue-dark); color:#fff;}
   .ind-chip[open] summary::after{content:"▴";}
   .ind-companies{
     margin-top:6px; margin-bottom:2px; padding:8px 10px; background:var(--blue-tint-2);
@@ -342,6 +346,7 @@
         <h2>지원 가능 회사 · 직무분야</h2>
         <span class="total" id="careerTotal">0건 매칭</span>
       </div>
+      <div class="career-hint">💡 업종 태그를 클릭하면 예시 기업이 펼쳐져요</div>
       <div class="results-body" id="careerBody">
         <div class="empty">선임 가능한 자격이 확인되면<br>관련 업종·직무 예시가 표시됩니다.</div>
       </div>
@@ -636,7 +641,7 @@ function render(){
               <div class="card-title">${rule.law}</div>
               <div class="badge career">지원 가능</div>
             </div>
-            <div class="card-desc">이 선임 자격을 우대하거나 요구하는 업종·직무입니다. <span style="opacity:0.7;">(업종 클릭 시 예시 기업)</span></div>
+            <div class="card-desc">이 선임 자격을 우대하거나 요구하는 업종·직무입니다.</div>
             <div class="tag-row">
               ${career.industries.map(i=>`
                 <details class="ind-chip">
