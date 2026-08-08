@@ -12,9 +12,9 @@
   :root{
     --navy:#0E1F35;
     --navy-2:#16324F;
-    --gold:#B08D57;
-    --gold-light:#E4D3AE;
-    --gold-tint:#F7F1E6;
+    --accent:#7A3348;
+    --accent-light:#C98FA0;
+    --accent-tint:#F7EEF1;
     --blue:#1B4B8F;
     --blue-dark:#0F345F;
     --blue-tint:#EEF2F8;
@@ -22,11 +22,14 @@
     --ink:#191C22;
     --gray:#5E6470;
     --gray-light:#9AA0AC;
-    --border:#E8E6DF;
-    --ok:#2F6F4E;
-    --ok-tint:#EAF3ED;
+    --border:#E5E6E9;
+    --ok:#0F345F;
+    --ok-tint:#F6F7F8;
+    --ok-border:#DDE1E6;
+    --job-color:#464C58;
+    --job-tint:#EEF0F3;
     --no-tint:#F5F5F2;
-    --stamp:#2F6F4E;
+    --stamp:#B33A3A;
     --serif: "Noto Serif KR", "Nanum Myeongjo", serif;
     --font: "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
 
@@ -61,11 +64,11 @@
   .pillar .dot{width:8px; height:8px; border-radius:50%; flex-shrink:0;}
   .pillar.env .dot{background:#4B8B6F;}
   .pillar.safe .dot{background:var(--blue);}
-  .pillar.health .dot{background:var(--gold);}
+  .pillar.health .dot{background:var(--accent);}
   .pillar.esg .dot{background:#6B5CA5;}
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
-    font-size:12px; font-weight:600; color:var(--gold); letter-spacing:0.14em;
+    font-size:12px; font-weight:600; color:var(--gray); letter-spacing:0.14em;
     text-transform:uppercase; margin-bottom:14px;
   }
   h1{
@@ -74,9 +77,9 @@
     letter-spacing:-0.01em; max-width:760px;
   }
   h1 span{color:var(--blue);}
-  .sub{color:var(--gray); font-size:15.5px; line-height:1.7; max-width:620px; margin:0; text-align:left;}
+  .sub{color:var(--gray); font-size:15.5px; line-height:1.7; white-space:nowrap; margin:0; text-align:left;}
   .hero-rule{
-    width:56px; height:2px; background:var(--gold); margin:24px 0 0;
+    width:56px; height:2px; background:var(--accent); margin:24px 0 0;
   }
 
   .layout{
@@ -85,6 +88,7 @@
   @media (max-width: 880px){
     .layout{grid-template-columns:1fr;}
     .hero-banner{padding:44px 20px 36px;}
+    .sub{white-space:normal;}
   }
 
   .panel{
@@ -145,29 +149,32 @@
     border:1px solid var(--border); border-radius:12px; padding:14px 14px 12px; position:relative;
     background:#fff;
   }
-  .card.ok{border-color:#CBDFD1; background:var(--ok-tint);}
+  .card.ok{border-color:var(--ok-border); background:var(--ok-tint);}
+  .card.career-ok{border-color:#C7D7EE; background:var(--blue-tint);}
   .card.no{background:var(--no-tint); opacity:0.72;}
   .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:8px;}
   .card-title{font-weight:800; font-size:14.5px; line-height:1.4;}
   .badge{
-    flex-shrink:0; font-size:10.5px; font-weight:700; padding:3px 10px; border-radius:3px;
-    border:1px solid var(--stamp); color:var(--stamp); letter-spacing:0.06em;
+    flex-shrink:0; font-size:11px; font-weight:800; padding:3px 10px; border-radius:100px;
+    border:1.5px solid var(--stamp); color:var(--stamp); background:#FBEAEA; letter-spacing:0.02em;
+    transform:rotate(-4deg);
   }
-  .badge.no{border-color:var(--gray-light); color:var(--gray-light);}
+  .badge.no{border-color:var(--gray-light); color:var(--gray-light); background:transparent; transform:none;}
   .card-desc{font-size:13px; color:var(--gray); line-height:1.55; margin-top:6px;}
   .card-basis{font-size:11.5px; color:var(--gray-light); margin-top:8px; border-top:1px dashed var(--border); padding-top:8px;}
   .card-basis b{color:var(--blue); font-weight:700;}
 
-  .badge.career{border-color:var(--blue); color:var(--blue);}
+  .badge.career{background:#FBEAEA; border-color:var(--stamp); color:var(--stamp);}
+  .badge.exp{background:#FBEAEA; border-color:var(--stamp); color:var(--stamp);}
   .tag-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
   .tag{
     font-size:11.5px; font-weight:600; color:var(--blue-dark); background:var(--blue-tint);
     padding:3px 9px; border-radius:100px;
   }
-  .tag.job{color:var(--ok); background:var(--ok-tint);}
-  .tag.salary{color:var(--gold); background:var(--gold-tint);}
+  .tag.job{color:var(--job-color); background:var(--job-tint);}
+  .tag.salary{color:var(--accent); background:var(--accent-tint);}
   .salary-line{font-size:12px; color:var(--gray); margin-top:9px; padding-top:9px; border-top:1px dashed var(--border);}
-  .salary-line b{color:#93713A;}
+  .salary-line b{color:var(--accent);}
 
   .empty{
     padding:40px 20px; text-align:center; color:var(--gray-light); font-size:13.5px; line-height:1.7;
@@ -562,10 +569,10 @@ function render(){
     if(matchedTier){
       matchCount++;
       cards.push(`
-        <div class="card ok">
+        <div class="card career-ok">
           <div class="card-top">
             <div class="card-title">${rule.law}</div>
-            <div class="badge">${rule.badgeText || '선임 가능'}</div>
+            <div class="badge${rule.badgeText ? ' exp' : ''}">${rule.badgeText || '선임 가능'}</div>
           </div>
           <div class="card-desc"><b>${matchedTier.label}</b>${matchedTier.desc ? ' — ' + matchedTier.desc : ''}${rule.fallback ? '<br>' + rule.fallback : ''}</div>
           <div class="card-basis">근거 · <b>${rule.basisLaw}</b></div>
@@ -575,7 +582,7 @@ function render(){
       const career = CAREER_MAP[rule.law];
       if(career){
         careerCards.push(`
-          <div class="card ok">
+          <div class="card career-ok">
             <div class="card-top">
               <div class="card-title">${rule.law}</div>
               <div class="badge career">지원 가능</div>
