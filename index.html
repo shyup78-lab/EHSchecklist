@@ -6,7 +6,7 @@
 <title>환경·안전·보건 법정 선임 자격 체크리스트</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
   :root{
@@ -72,14 +72,36 @@
     text-transform:uppercase; margin-bottom:14px;
   }
   h1{
-    font-family:var(--serif); color:var(--ink); text-align:left;
-    font-size:clamp(26px,3.6vw,38px); line-height:1.4; margin:0 0 16px; font-weight:700;
-    letter-spacing:-0.01em; max-width:760px;
+    font-family:var(--font); color:var(--ink); text-align:left;
+    font-size:clamp(26px,3.6vw,38px); line-height:1.4; margin:0 0 16px; font-weight:800;
+    letter-spacing:-0.02em; max-width:760px;
   }
   h1 span{color:var(--blue);}
   .sub{color:var(--gray); font-size:15.5px; line-height:1.7; white-space:nowrap; margin:0; text-align:left;}
   .hero-rule{
     width:56px; height:2px; background:var(--accent); margin:24px 0 0;
+  }
+
+  .creator-card{
+    margin-top:26px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    padding:16px 20px; border:1px solid var(--border); border-radius:12px;
+    background:var(--blue-tint-2); max-width:fit-content;
+  }
+  .creator-emoji{
+    width:36px; height:36px; border-radius:8px; background:#fff; border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;
+  }
+  .creator-bio{
+    font-size:12.5px; color:var(--ink); line-height:1.6; font-weight:500;
+  }
+  .creator-link{
+    font-size:12px; font-weight:700; color:#fff; background:var(--ink);
+    padding:7px 16px; border-radius:6px; text-decoration:none; white-space:nowrap;
+    transition:opacity .15s ease;
+  }
+  .creator-link:hover{opacity:0.8;}
+  @media (max-width: 640px){
+    .creator-card{ max-width:100%; }
   }
 
   .layout{
@@ -139,7 +161,7 @@
     padding:18px 20px; border-bottom:1px solid var(--border);
     display:flex; align-items:center; justify-content:space-between;
   }
-  .results-head h2{font-family:var(--serif); font-size:16.5px; margin:0; font-weight:700;}
+  .results-head h2{font-family:var(--font); font-size:16.5px; margin:0; font-weight:800;}
   .results-head .total{
     font-size:12.5px; font-weight:700; color:var(--blue);
   }
@@ -166,6 +188,7 @@
   .card-desc{font-size:13px; color:var(--gray); line-height:1.55; margin-top:6px;}
   .card-basis{font-size:11.5px; color:var(--gray-light); margin-top:8px; border-top:1px dashed var(--border); padding-top:8px;}
   .card-basis b{color:var(--blue); font-weight:700;}
+  .headcount-line{font-size:11.5px; color:var(--ink); font-weight:600; margin-top:8px; line-height:1.55;}
 
   .badge.career{background:#FBEAEA; border-color:var(--stamp); color:var(--stamp);}
   .badge.exp{background:#FBEAEA; border-color:var(--stamp); color:var(--stamp);}
@@ -235,9 +258,23 @@
         <span class="pillar esg"><span class="dot"></span>ESG</span>
       </div>
       <div class="eyebrow">Environment · Safety · Health · ESG</div>
-      <h1>내 자격증으로 <span>어디까지 선임</span> 가능할까</h1>
+      <h1>내 자격증으로 <span>어디까지 선임</span> 가능할까?</h1>
       <p class="sub">보유하고 있거나 취득 예정인 자격증을 체크하면, 관련 법규상 법정 선임(환경기술인·기술관리인·안전관리자 등)이 가능한 범위를 정리해서 보여드립니다.</p>
       <div class="hero-rule"></div>
+
+      <div class="creator-card">
+        <div class="creator-emoji">🌱</div>
+        <div class="creator-body">
+          <div class="creator-bio">
+            전문대 졸업 👉🏻 환경안전팀 연봉 1억까지 ✨<br>
+            현) 외국계 중견기업 환경안전팀 (10년차)<br>
+            취업 + 취준을 위한 정보를 공유드립니다 👀
+          </div>
+        </div>
+        <a class="creator-link" href="https://www.threads.com/@env.dalin?igshid=NTc4MTIwNjQ2YQ==" target="_blank" rel="noopener">
+          취업+취준 꿀팁 더 보기 →
+        </a>
+      </div>
     </div>
   </div>
 
@@ -300,8 +337,8 @@
         <div class="items">
           <label class="item"><input type="checkbox" data-tag="산업안전기사"> 산업안전기사</label>
           <label class="item"><input type="checkbox" data-tag="산업안전산업기사"> 산업안전산업기사</label>
-          <label class="item"><input type="checkbox" data-tag="건설안전기사"> 건설안전기사</label>
-          <label class="item"><input type="checkbox" data-tag="건설안전산업기사"> 건설안전산업기사</label>
+          <label class="item"><input type="checkbox" data-tag="건설안전기사"> 건설안전기사 <span class="note">공사금액 기준 적용</span></label>
+          <label class="item"><input type="checkbox" data-tag="건설안전산업기사"> 건설안전산업기사 <span class="note">공사금액 기준 적용</span></label>
           <label class="item"><input type="checkbox" data-tag="산업안전지도사"> 산업안전지도사</label>
           <label class="item"><input type="checkbox" data-tag="산업위생관리기사"> 산업위생관리기사</label>
           <label class="item"><input type="checkbox" data-tag="산업위생관리산업기사"> 산업위생관리산업기사</label>
@@ -320,6 +357,16 @@
           <label class="item"><input type="checkbox" data-tag="온실가스산업기사"> 온실가스관리산업기사</label>
           <label class="item"><input type="checkbox" data-tag="에너지관리기사"> 에너지관리기사 <span class="note">보일러 등 검사대상기기</span></label>
           <label class="item"><input type="checkbox" data-tag="에너지관리산업기사"> 에너지관리산업기사 <span class="note">보일러 등 검사대상기기</span></label>
+          <label class="item"><input type="checkbox" data-tag="에너지관리기능장"> 에너지관리기능장 <span class="note">보일러 등 검사대상기기</span></label>
+        </div>
+      </details>
+
+      <details class="group">
+        <summary>위험물 분야 자격증 <span class="chev">▸</span><span class="count" id="cnt-hazmat">0</span></summary>
+        <div class="items">
+          <label class="item"><input type="checkbox" data-tag="위험물기능장"> 위험물기능장</label>
+          <label class="item"><input type="checkbox" data-tag="위험물산업기사"> 위험물산업기사</label>
+          <label class="item"><input type="checkbox" data-tag="위험물기능사"> 위험물기능사 <span class="note">경력 2년 시 무제한</span></label>
         </div>
       </details>
 
@@ -357,11 +404,9 @@
   <div class="disclaimer">
     ⚠️ 본 도구는 대기환경보전법·물환경보전법·소음진동관리법·폐기물관리법·산업안전보건법의 공개된 자격기준을 요약한 참고용 자료입니다. 사업장의 정확한 종별 구분, 상시근로자 수, 업종에 따라 실제 선임 요건이 달라질 수 있으니, 지원 전 반드시 국가법령정보센터(law.go.kr) 원문 또는 관할 지자체·안전보건공단에 최종 확인하시길 권장합니다.
     <br><br>
+    👥 선임 인원 기준은 업종·시설 규모별로 세부 기준(시행령 별표3·5·6 등)이 다르게 적용되므로, 위 인원 수치는 대표적인 경우를 단순화한 참고치입니다. 정확한 인원 산정은 관할 지방고용노동관서 또는 안전보건공단에 확인하세요.
+    <br><br>
     💰 초봉 범위는 채용 플랫폼(잡코리아·사람인 등) 공개 데이터와 일반적인 시장 정보를 바탕으로 한 대략적인 참고치이며, 실제 급여는 기업 규모·지역·복리후생·자격증 가산 여부에 따라 달라집니다. 지원 전 채용 공고나 잡코리아·사람인의 기업별 연봉 정보를 함께 확인하세요.
-  </div>
-
-  <div class="footer-note">
-    <b>같이 보면 좋아요</b> — ESG·탄소중립(RE100, 온실가스 목표관리제 등)은 개인 자격증에 기반한 법정 "선임" 제도가 아니라, 기업이 온실가스 관리업무 전담조직을 지정하는 방식이라 이 체크리스트 대상에서는 제외했습니다. 온실가스 검증심사원 등은 별도의 심사원보 교육·경력 트랙으로 준비하시면 됩니다.
   </div>
 
   <div class="visitor-stats" id="visitorStats">
@@ -379,6 +424,7 @@ const RULES = [
   {
     law: "대기환경기술인",
     basisLaw: "대기환경보전법 시행령 별표10",
+    headcount: "종별 최소 1명 이상 (배출시설 규모가 매우 큰 사업장은 추가 인원이 필요할 수 있음)",
     tiers: [
       { need: ["대기기사","대기기술사"], label: "1종 사업장까지 선임 가능", desc: "대기오염물질 발생량 연간 80톤 이상 사업장 포함, 전 종 선임 가능" },
       { need: ["대기산업기사"], label: "2종 사업장까지 선임 가능", desc: "연간 20톤 이상 80톤 미만 사업장까지" },
@@ -391,6 +437,7 @@ const RULES = [
   {
     law: "수질환경기술인",
     basisLaw: "물환경보전법 시행령 별표17",
+    headcount: "종별 최소 1명 이상 (배출량이 매우 큰 사업장은 추가 인원이 필요할 수 있음)",
     tiers: [
       { need: ["수질기사","수질기술사"], label: "1종 사업장까지 선임 가능", desc: "폐수배출량이 큰 1종 사업장 포함, 전 종 선임 가능" },
       { need: ["수질산업기사"], label: "2종 사업장까지 선임 가능", desc: "" },
@@ -403,6 +450,7 @@ const RULES = [
   {
     law: "소음·진동환경기술인",
     basisLaw: "소음·진동관리법 시행규칙 별표7",
+    headcount: "종별 최소 1명 이상 (배출시설 규모가 큰 사업장은 추가 인원이 필요할 수 있음)",
     tiers: [
       { need: ["소음기사","소음기술사"], label: "1종 사업장까지 선임 가능", desc: "" },
       { need: ["소음산업기사"], label: "2종 사업장까지 선임 가능", desc: "" },
@@ -415,6 +463,7 @@ const RULES = [
   {
     law: "폐기물처리시설 기술관리인 (매립시설)",
     basisLaw: "폐기물관리법 시행규칙 별표14",
+    headcount: "시설당 1명",
     tiers: [
       { need: ["폐기물기사","수질기사","토목기사","일반기계기사","건설기계설비기사","화공기사","토양환경기사"], label: "매립시설 기술관리인 선임 가능", desc: "해당 자격 중 1개 이상 보유 시 선임 가능" },
     ],
@@ -422,6 +471,7 @@ const RULES = [
   {
     law: "폐기물처리시설 기술관리인 (소각·소성로·소각열회수시설)",
     basisLaw: "폐기물관리법 시행규칙 별표14",
+    headcount: "시설당 1명",
     tiers: [
       { need: ["폐기물기사","대기기사","토목기사","일반기계기사","건설기계설비기사","화공기사","전기기사","전기공사기사","에너지관리기사"], label: "소각시설 등 기술관리인 선임 가능", desc: "일반 소각시설·시멘트소성로·용해로·소각열회수시설 대상 (의료폐기물 소각시설 제외)" },
     ],
@@ -429,6 +479,7 @@ const RULES = [
   {
     law: "폐기물처리시설 기술관리인 (의료폐기물 소각시설)",
     basisLaw: "폐기물관리법 시행규칙 별표14",
+    headcount: "시설당 1명",
     tiers: [
       { need: ["폐기물산업기사","임상병리사","위생사"], label: "의료폐기물 소각시설 기술관리인 선임 가능", desc: "" },
     ],
@@ -436,17 +487,18 @@ const RULES = [
   // ---- 산업안전보건법 안전관리자 ----
   {
     law: "산업안전보건법 안전관리자",
-    basisLaw: "산업안전보건법 시행령 별표4",
+    basisLaw: "산업안전보건법 시행령 별표3·별표4",
     tiers: [
-      { need: ["산업안전지도사"], label: "전 업종 안전관리자 선임 가능", desc: "산업안전지도사는 건설안전 분야를 제외한 전 업종에서 안전관리자 선임 자격 인정" },
-      { need: ["산업안전기사","산업안전산업기사"], label: "일반 사업장 안전관리자 선임 가능", desc: "업종·상시근로자 수에 따라 선임 의무 규모가 다르므로 사업장별 확인 필요" },
-      { need: ["건설안전기사","건설안전산업기사"], label: "건설업 안전관리자 선임 가능", desc: "공사금액 기준에 따라 선임 의무 규모가 다름" },
+      { need: ["산업안전지도사"], label: "전 업종 안전관리자 선임 가능", desc: "산업안전지도사는 건설안전 분야를 제외한 전 업종에서 안전관리자 선임 자격 인정", headcount: "사업장 규모에 따라 1명 이상 (위탁 시 별도 기준 적용)" },
+      { need: ["산업안전기사","산업안전산업기사"], label: "일반 사업장 안전관리자 선임 가능", desc: "업종·상시근로자 수에 따라 선임 의무 규모가 다르므로 사업장별 확인 필요", headcount: "제조업 등 대부분 업종: 상시근로자 50인 이상부터 선임 의무 (도소매업 등은 100인, 순수 사무직은 300인부터) · 통상 50~500인: 1명, 500인 이상은 규모에 따라 2명 이상 배치 (정확한 인원은 업종별 시행령 별표3 확인 필요)" },
+      { need: ["건설안전기사","건설안전산업기사"], label: "건설업 안전관리자 선임 가능", desc: "공사금액 기준에 따라 선임 의무 규모가 다름", headcount: "공사금액 120억원(토목공사 150억원) 이상 800억원 미만: 1명 · 800억원 이상: 2명, 이후 공사금액 700억원 증가마다 1명씩 추가" },
     ],
   },
   // ---- 산업안전보건법 보건관리자 ----
   {
     law: "산업안전보건법 보건관리자",
-    basisLaw: "산업안전보건법 시행령 별표6",
+    basisLaw: "산업안전보건법 시행령 별표5·별표6",
+    headcount: "상시근로자 50인 이상부터 선임 의무 · 3,000인 이상 사업장은 2명 이상 (업종별 세부 인원은 별표5 확인 필요)",
     tiers: [
       { need: ["산업보건지도사"], label: "보건관리자 선임 가능", desc: "산업보건지도사 자격 소지자" },
       { need: ["산업위생관리기사","산업위생관리산업기사"], label: "보건관리자 선임 가능", desc: "" },
@@ -459,9 +511,20 @@ const RULES = [
   {
     law: "검사대상기기관리자 (보일러 등)",
     basisLaw: "에너지이용합리화법 시행규칙 별표3의9",
+    headcount: "시설당 1명",
     tiers: [
-      { need: ["에너지관리기사"], label: "전체 검사대상기기 조종·관리 가능", desc: "에너지관리기사 이상 자격 시 조종범위 제한 없음" },
+      { need: ["에너지관리기사","에너지관리기능장"], label: "전체 검사대상기기 조종·관리 가능", desc: "에너지관리기사 이상 자격 시 조종범위 제한 없음" },
       { need: ["에너지관리산업기사"], label: "일부 규모 검사대상기기 조종·관리 가능", desc: "용량 기준에 따라 조종 가능 범위가 제한될 수 있음" },
+    ],
+  },
+  // ---- 위험물안전관리자 (위험물안전관리법 시행령 별표6) ----
+  {
+    law: "위험물안전관리자",
+    basisLaw: "위험물안전관리법 시행령 별표6",
+    headcount: "제조소·저장소·취급소별 1명",
+    tiers: [
+      { need: ["위험물기능장","위험물산업기사"], label: "전체 규모 제조소·저장소·취급소 선임 가능", desc: "지정수량·위험물 종류 제한 없이 선임 가능" },
+      { need: ["위험물기능사"], label: "규모 제한 내 선임 가능 (경력 2년 이상 시 무제한)", desc: "제4류 위험물 지정수량 5배 이하 등 일부 규모는 무경력자도 가능, 경력 2년 이상이면 상위 자격과 동일하게 선임 가능" },
     ],
   },
   // ---- 온실가스 검증심사원보 경력 인정 (법정 선임은 아님) ----
@@ -505,6 +568,10 @@ const INDUSTRY_EXAMPLES = {
   "온실가스 검증기관": ["한국표준협회", "한국품질재단", "로이드인증원(LRQA)", "DNV코리아", "한국경영인증원"],
   "ESG 컨설팅업체": ["삼정KPMG", "삼일PwC", "EY한영", "딜로이트안진"],
   "제조업 ESG경영팀·탄소중립 전담부서": ["삼성전자", "SK그룹", "LG그룹", "효성", "세아그룹", "국내 주요 제조 대기업·중견기업 ESG경영팀"],
+  "석유화학·정유업체": ["S-Oil", "GS칼텍스", "SK이노베이션", "현대오일뱅크"],
+  "주유소·석유판매업": ["지역별 주유소·석유판매업체 다수"],
+  "도료·잉크·화학제품 제조업": ["KCC", "노루페인트", "삼화페인트"],
+  "위험물 저장·운송업체": ["대한송유관공사", "지역별 위험물 저장·운송 전문업체"],
 };
 
 const CAREER_MAP = {
@@ -553,6 +620,11 @@ const CAREER_MAP = {
     jobs: ["설비관리팀 / 시설관리팀", "보일러 취급관리자"],
     salary: "중소 2,700~3,000만 · 중견 3,000~3,500만 · 대기업/공기업 3,500~4,000만",
   },
+  "위험물안전관리자": {
+    industries: ["석유화학·정유업체", "주유소·석유판매업", "도료·잉크·화학제품 제조업", "위험물 저장·운송업체"],
+    jobs: ["위험물안전관리자", "환경안전팀 / 화학물질 관리 담당"],
+    salary: "중소 3,000~3,500만 · 중견 3,500~4,500만 · 대기업/정유사 4,500~6,000만",
+  },
   "온실가스 검증심사원보 경력 인정": {
     industries: ["온실가스 검증기관", "ESG 컨설팅업체", "제조업 ESG경영팀·탄소중립 전담부서"],
     jobs: ["온실가스 검증심사원(보)", "ESG/탄소중립 담당자"],
@@ -577,7 +649,8 @@ function updateCounts(){
     'cnt-waste': ['폐기물기사','폐기물산업기사'],
     'cnt-etc': ['토목기사','일반기계기사','건설기계설비기사','화공기사','토양환경기사','전기기사','전기공사기사'],
     'cnt-safety': ['산업안전기사','산업안전산업기사','건설안전기사','건설안전산업기사','산업안전지도사','산업위생관리기사','산업위생관리산업기사','산업보건지도사','인간공학기사','간호사','임상병리사','위생사'],
-    'cnt-ghg': ['온실가스기사','온실가스산업기사','에너지관리기사','에너지관리산업기사'],
+    'cnt-ghg': ['온실가스기사','온실가스산업기사','에너지관리기사','에너지관리산업기사','에너지관리기능장'],
+    'cnt-hazmat': ['위험물기능장','위험물산업기사','위험물기능사'],
   };
   const checked = getChecked();
   Object.entries(groups).forEach(([id, tags])=>{
@@ -629,6 +702,7 @@ function render(){
             <div class="badge${rule.badgeText ? ' exp' : ''}">${rule.badgeText || '선임 가능'}</div>
           </div>
           <div class="card-desc"><b>${matchedTier.label}</b>${matchedTier.desc ? ' — ' + matchedTier.desc : ''}${rule.fallback ? '<br>' + rule.fallback : ''}</div>
+          ${(matchedTier.headcount || rule.headcount) ? `<div class="headcount-line">👥 선임 인원 기준 · ${matchedTier.headcount || rule.headcount}</div>` : ''}
           <div class="card-basis">근거 · <b>${rule.basisLaw}</b></div>
         </div>
       `);
