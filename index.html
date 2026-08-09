@@ -258,6 +258,36 @@
     padding:40px 20px; text-align:center; color:var(--gray-light); font-size:13.5px; line-height:1.7;
   }
 
+  .target-panel{ margin-top:24px; padding-bottom:18px; }
+  .target-group-label{
+    padding:14px 20px 6px; font-size:12.5px; font-weight:700; color:var(--gray);
+  }
+  .target-chip-row{
+    padding:2px 20px 10px; display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .target-chip{
+    font-size:13px; font-weight:600; color:var(--ink); background:#fff;
+    border:1.5px solid var(--border); padding:7px 14px; border-radius:100px; cursor:pointer;
+    font-family:var(--font); transition:all .15s ease;
+  }
+  .target-chip:hover{ border-color:var(--blue); }
+  .target-chip.active{
+    background:var(--blue-dark); color:#fff; border-color:var(--blue-dark);
+  }
+  .target-result{ padding:6px 20px 20px; }
+  .target-result .card{ margin-top:6px; }
+  .target-basis{
+    display:inline-block; font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:100px;
+    margin-bottom:8px;
+  }
+  .target-basis.confirmed{ background:#EAF3ED; color:#2F6F4E; }
+  .target-basis.general{ background:#F2EEE3; color:#8A7448; }
+  .target-cert-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .target-cert{
+    font-size:12.5px; font-weight:700; padding:5px 12px; border-radius:8px;
+  }
+  .target-cert.core{ background:var(--blue-tint); color:var(--blue-dark); border:1px solid #C7D7EE; }
+  .target-cert.sub{ background:var(--job-tint); color:var(--job-color); border:1px solid var(--border); }
   .disclaimer{
     margin-top:20px; font-size:12px; color:var(--gray-light); line-height:1.7;
     padding:14px 16px; background:var(--blue-tint-2); border-radius:10px; border:1px solid var(--border);
@@ -458,12 +488,31 @@
 
   </div>
 
+  <div class="panel target-panel">
+    <div class="results-head">
+      <h2>🎯 목표 기업·직무로 필요 자격증 확인</h2>
+    </div>
+    <div class="career-hint">💡 아래에서 지원하고 싶은 기업이나 직무를 선택하면, 실제 채용정보·직무기술서를 기반으로 확인한 자격증 조합이 나와요</div>
+
+    <div class="target-group-label">공공기관 · 공기업</div>
+    <div class="target-chip-row" id="targetChipsOrg"></div>
+
+    <div class="target-group-label">직무 (일반 기업 공통)</div>
+    <div class="target-chip-row" id="targetChipsJob"></div>
+
+    <div id="targetResult" class="target-result">
+      <div class="empty">위에서 목표 기업이나 직무를 선택해보세요.</div>
+    </div>
+  </div>
+
   <div class="disclaimer">
     ⚠️ 본 도구는 대기환경보전법·물환경보전법·소음진동관리법·폐기물관리법·산업안전보건법의 공개된 자격기준을 요약한 참고용 자료입니다. 사업장의 정확한 종별 구분, 상시근로자 수, 업종에 따라 실제 선임 요건이 달라질 수 있으니, 지원 전 반드시 국가법령정보센터(law.go.kr) 원문 또는 관할 지자체·안전보건공단에 최종 확인하시길 권장합니다.
     <br><br>
     👥 선임 인원 기준은 업종·시설 규모별로 세부 기준(시행령 별표3·5·6 등)이 다르게 적용되므로, 위 인원 수치는 대표적인 경우를 단순화한 참고치입니다. 정확한 인원 산정은 관할 지방고용노동관서 또는 안전보건공단에 확인하세요.
     <br><br>
     💰 초봉 범위는 채용 플랫폼(잡코리아·사람인 등) 공개 데이터와 일반적인 시장 정보를 바탕으로 한 대략적인 참고치이며, 실제 급여는 기업 규모·지역·복리후생·자격증 가산 여부에 따라 달라집니다. 지원 전 채용 공고나 잡코리아·사람인의 기업별 연봉 정보를 함께 확인하세요.
+    <br><br>
+    🎯 목표별 자격증 조합은 실제 채용공고·NCS 직무기술서·현직자 후기를 참고해 정리했지만, 채용 시기·직렬·회차마다 요건이 달라질 수 있습니다. 지원 전 반드시 해당 기관의 최신 채용공고를 확인하세요.
   </div>
 
   <div class="visitor-stats" id="visitorStats">
@@ -691,6 +740,239 @@ const CAREER_MAP = {
     salary: "중소 2,800~3,200만 · 중견 3,300~3,900만 · 대기업/컨설팅펌 3,900~4,800만",
   },
 };
+
+// ---- 목표 기업·직무별 필요 자격증 조합 ----
+const TARGETS = [
+  {
+    id: "kwater",
+    group: "org",
+    name: "한국수자원공사 (K-water)",
+    confirmed: true,
+    core: ["수질환경기사"],
+    sub: ["대기환경기사", "환경공학 관련 전공"],
+    note: "수자원·물산업이 메인 사업이라 환경직 중에서도 <b>수질환경기사</b>의 비중이 압도적으로 큽니다. 대기환경기사는 있으면 좋지만 없어도 무방하다는 현직자 의견이 많아요. 학력·전공·자격증 제한 없이 지원 가능하지만, NCS와 전공(7:3 비중)을 함께 준비해야 합니다.",
+    source: "K-water 채용공고, 잡코리아·코멘토 현직자 스펙 정보, 나무위키",
+  },
+  {
+    id: "keco",
+    group: "org",
+    name: "한국환경공단",
+    confirmed: true,
+    core: ["대기환경기사", "수질환경기사", "폐기물처리기사"],
+    sub: ["토양환경기사", "소음진동환경기사"],
+    note: "공기업 환경직 중 <b>요구 스펙이 가장 높은 곳</b>으로 알려져 있어요. 환경기사 5종(대기·수질·폐기물·토양·소음진동) 중 <b>2개 이상 보유</b>가 유리하며, 서류전형에서 환경기사 추가 보유·어학성적(토익 900+ 또는 오픽 IH+)이 실질적으로 당락에 영향을 준다는 현직자 후기가 많습니다.",
+    source: "블라인드 현직자 후기, 코네틱 채용정보, 잡코리아",
+  },
+  {
+    id: "kepco-eng",
+    group: "org",
+    name: "한국전력기술 (발전 플랜트 환경설비)",
+    confirmed: true,
+    core: ["수질환경기사", "대기환경기사", "폐기물처리기사"],
+    sub: ["화공기사", "가스기사", "환경 관련 기술사·박사학위"],
+    note: "발전소·플랜트의 수질·대기·폐기물 처리시설 설계·구매·시공 지원 직무 기준입니다. NCS 직무기술서에 <b>수질환경기사·대기환경기사·폐기물처리기사·화공기사·가스기사</b>가 명시적으로 우대자격증으로 나열되어 있고, 기술사·박사학위는 가점 요소입니다.",
+    source: "한국전력기술 NCS 직무기술서(공개자료)",
+  },
+  {
+    id: "kogas",
+    group: "org",
+    name: "한국가스공사 (화공직)",
+    confirmed: true,
+    core: ["화공기사", "산업안전기사"],
+    sub: ["가스기사"],
+    note: "화공직으로 입사 시 안전·공정(생산운영·공급운영)·건설공무 등에 배치되며, <b>화공기사와 산업안전(관리)기사는 입사는 물론 진급 시에도 필수 조건</b>이라는 현직자 의견이 확인됩니다. 자격이 없으면 진급이 막힐 수 있다고 하니 재직 중에도 꾸준히 챙겨야 하는 자격증입니다.",
+    source: "잡코리아 현직자 Q&A(화공과 재직자 답변)",
+  },
+  {
+    id: "power-gen",
+    group: "org",
+    name: "발전공기업 5사 (중부·남동·서부·남부·동서발전)",
+    confirmed: false,
+    core: ["대기환경기사", "수질환경기사"],
+    sub: ["화공기사", "산업안전기사", "폐기물처리기사"],
+    note: "5개 발전공기업 모두 '환경기사' 채용 직군이 별도로 존재합니다(잡코리아 직무 리스트 확인). 정확한 우대자격증 목록은 회차·연도별 공고에 따라 달라지므로 대표적인 환경계열 기사 조합으로 참고하세요. 참고로 한국중부발전 대졸 초임은 통상근무 기준 약 4,600만원(교대근무 시 수당 추가)으로 공개돼 있습니다.",
+    source: "한국중부발전 채용안내 공개자료 + 잡코리아 직무리스트, 조합은 일반화",
+  },
+  {
+    id: "lh",
+    group: "org",
+    name: "LH 한국토지주택공사 (기술직 환경군)",
+    confirmed: true,
+    core: ["대기환경기사", "수질환경기사"],
+    sub: ["토양환경기사", "환경영향평가사"],
+    note: "LH는 토목군 안에 '환경' 직군을 별도로 채용합니다(공고에 명시된 정식 직군명). 택지개발·주택단지 조성 과정의 환경영향평가 대응 업무 특성상 <b>토양환경기사·환경영향평가사</b>도 함께 보면 도움이 됩니다. 정확한 우대자격증 목록은 회차별 공고문에서 확인이 꼭 필요해요.",
+    source: "LH 채용공고 직군 목록(기술직_토목군_환경), 세부 자격증 조합은 일반화",
+  },
+  {
+    id: "incheon-airport",
+    group: "org",
+    name: "인천국제공항공사 (환경·소음 직무)",
+    confirmed: false,
+    core: ["소음진동환경기사", "대기환경기사"],
+    sub: ["수질환경기사", "산업안전기사"],
+    note: "공항은 항공기 소음 관리가 핵심 이슈라 <b>소음진동환경기사</b>가 다른 공기업보다 상대적으로 중요하게 다뤄지는 편입니다. 대기환경기사는 공항시설 배출시설 관리 업무와 관련이 있습니다. 정확한 자격증 목록은 회차별 공고문 확인이 필요합니다.",
+    source: "업무 특성 기반 추정, 조합은 일반화(공고문 직접 확인 권장)",
+  },
+  {
+    id: "korail",
+    group: "org",
+    name: "한국철도공사 (코레일) 환경·안전 직무",
+    confirmed: false,
+    core: ["산업안전기사"],
+    sub: ["대기환경기사", "수질환경기사", "소음진동환경기사"],
+    note: "역사·차량기지 시설 관리 특성상 산업안전기사가 기본이고, 환경계열 기사는 시설·설비 부서에서 보유 시 우대받는 경향이 있습니다. 정확한 직군별 우대자격증은 회차별 공고문에서 꼭 확인하세요.",
+    source: "업계 채용 경향 종합, 일반화된 참고용",
+  },
+  {
+    id: "district-heating",
+    group: "org",
+    name: "한국지역난방공사",
+    confirmed: false,
+    core: ["대기환경기사", "에너지관리기사"],
+    sub: ["수질환경기사", "산업안전기사"],
+    note: "열병합발전소를 운영하는 특성상 대기오염물질 배출시설 관리(대기환경기사)와 보일러 등 검사대상기기 관리(에너지관리기사)가 함께 요구되는 경우가 많습니다.",
+    source: "업계 채용 경향 종합, 일반화된 참고용",
+  },
+  {
+    id: "petro-corp",
+    group: "org",
+    name: "한국석유공사",
+    confirmed: false,
+    core: ["위험물기능장", "화공기사"],
+    sub: ["대기환경기사", "산업안전기사"],
+    note: "원유·석유제품 저장시설을 다루는 특성상 정유·석유화학사와 유사하게 위험물기능장·화공기사 조합이 유리합니다.",
+    source: "업계 채용 경향 종합(정유업계 패턴 참고), 일반화된 참고용",
+  },
+  {
+    id: "ehs-team",
+    group: "job",
+    name: "환경안전팀 (제조업 공통)",
+    confirmed: false,
+    core: ["대기환경기사", "수질환경기사", "폐기물처리기사"],
+    sub: ["산업안전기사", "산업위생관리기사", "온실가스관리기사"],
+    note: "특정 회사 공고가 아니라, 국내 제조업(화학·반도체·자동차 등) 환경안전팀 채용에서 반복적으로 나타나는 통상적인 조합이에요. 환경계열 기사 중 1~2개 + 최근에는 ESG·탄소중립 대응을 위해 <b>산업안전기사나 온실가스관리기사</b>까지 함께 있으면 통합 EHS 인력으로 우대받는 경향이 있습니다.",
+    source: "채용 플랫폼(잡코리아·사람인) 공고 경향 종합, 일반화된 참고용",
+  },
+  {
+    id: "safety-manager",
+    group: "job",
+    name: "안전관리자 (제조업·건설업)",
+    confirmed: false,
+    core: ["산업안전기사"],
+    sub: ["건설안전기사(건설업 지원 시)", "산업안전지도사(상위 자격)"],
+    note: "제조업 등 일반 사업장은 <b>산업안전기사</b>가 표준, 건설업 현장은 <b>건설안전기사</b>가 표준입니다(선임 자격 요건과 동일). 두 자격을 함께 보유하면 제조·건설 어느 쪽이든 지원 폭이 넓어집니다.",
+    source: "산업안전보건법 시행령 별표3·4 기준 + 채용공고 경향",
+  },
+  {
+    id: "health-manager",
+    group: "job",
+    name: "보건관리자",
+    confirmed: false,
+    core: ["산업위생관리기사"],
+    sub: ["간호사 면허", "인간공학기사"],
+    note: "가장 표준적인 조합은 <b>산업위생관리기사</b>입니다. 간호사 면허나 인간공학기사로도 선임 가능하지만, 채용 시장에서는 산업위생관리기사 보유자를 가장 폭넓게 찾는 편이에요.",
+    source: "산업안전보건법 시행령 별표6 기준 + 채용공고 경향",
+  },
+  {
+    id: "petro-chem",
+    group: "job",
+    name: "정유·석유화학사 환경안전 (GS칼텍스·SK이노베이션·S-Oil 등)",
+    confirmed: false,
+    core: ["위험물기능장", "화공기사"],
+    sub: ["대기환경기사", "수질환경기사", "산업안전기사"],
+    note: "정유·석유화학 공장은 위험물(원유·화학물질) 저장·취급 시설이 핵심이라 <b>위험물기능장·화공기사</b>가 강하게 요구되며, 여기에 대기·수질환경기사와 산업안전기사를 더하면 환경안전 통합직무에 폭넓게 지원할 수 있습니다. 실제로 GS칼텍스·효성화학 등에서 '환경안전팀' 명칭의 경력·신입 공고가 꾸준히 올라옵니다.",
+    source: "GS칼텍스·효성화학 채용공고 사례, 조합은 일반화",
+  },
+  {
+    id: "semicon-ehs",
+    group: "job",
+    name: "반도체·전자 대기업 EHS팀 (삼성전자·SK하이닉스 등)",
+    confirmed: false,
+    core: ["대기환경기사", "수질환경기사", "산업안전기사"],
+    sub: ["산업위생관리기사", "폐기물처리기사"],
+    note: "반도체·디스플레이 공장은 유해화학물질 사용량이 많아 환경(대기·수질)과 안전·보건을 함께 다루는 통합 EHS 조직이 표준입니다. 환경계열 기사 1개 + 산업안전기사를 함께 갖추면 EHS 직무에 지원할 때 강점이 됩니다.",
+    source: "채용 플랫폼 공고 경향 종합, 일반화된 참고용",
+  },
+  {
+    id: "auto-steel",
+    group: "job",
+    name: "자동차·철강 대기업 환경안전팀 (현대자동차·포스코 등)",
+    confirmed: false,
+    core: ["대기환경기사", "산업안전기사"],
+    sub: ["수질환경기사", "폐기물처리기사", "온실가스관리기사"],
+    note: "제철·자동차 생산라인은 대기오염물질 배출과 산업안전 이슈가 모두 크기 때문에, 대기환경기사와 산업안전기사를 함께 보유한 인력을 선호하는 경향이 뚜렷합니다. 최근 탄소중립 대응을 위해 온실가스관리기사도 가점 요소로 언급되는 경우가 늘고 있습니다.",
+    source: "채용 플랫폼 공고 경향 종합, 일반화된 참고용",
+  },
+  {
+    id: "construction-safety",
+    group: "job",
+    name: "건설사 안전관리자 (현대건설·GS건설 등)",
+    confirmed: false,
+    core: ["건설안전기사"],
+    sub: ["산업안전기사", "건설안전지도사"],
+    note: "건설현장은 산업안전보건법상 <b>건설안전기사</b>가 표준 선임 자격입니다. 대형 건설사일수록 공사금액이 커서 안전관리자 선임 인원 자체가 많아, 관련 자격증 보유자에 대한 채용 수요가 꾸준합니다.",
+    source: "산업안전보건법 시행령 별표4 기준 + 채용공고 경향",
+  },
+  {
+    id: "waste-company",
+    group: "job",
+    name: "폐기물처리업체 (SK에코플랜트·에코비트 등)",
+    confirmed: false,
+    core: ["폐기물처리기사"],
+    sub: ["대기환경기사", "수질환경기사", "일반기계기사"],
+    note: "매립·소각시설 기술관리인 선임 자격과 직접 연결되는 <b>폐기물처리기사</b>가 핵심입니다. 소각시설은 대기환경기사, 매립시설은 토목·기계 계열 자격도 함께 보면 선택지가 넓어집니다.",
+    source: "폐기물관리법 시행규칙 별표14 기준 + 채용공고 경향",
+  },
+  {
+    id: "esg-consulting",
+    group: "job",
+    name: "ESG·탄소중립 컨설팅펌 (Big4 등)",
+    confirmed: false,
+    core: ["온실가스관리기사"],
+    sub: ["환경계열 기사(대기·수질 등)", "경영·재무 관련 배경"],
+    note: "온실가스관리기사는 검증심사원보 경력 요건을 단축시켜주는 등 ESG 컨설팅 분야에서 실질적으로 인정받는 자격증입니다. 컨설팅펌 특성상 환경 전공지식과 함께 경영·재무 분석 역량도 같이 어필하면 더 유리합니다.",
+    source: "한국표준협회 등 인증기관 자격기준 + 업계 채용 경향",
+  },
+];
+
+function renderTargetChips(){
+  const orgWrap = document.getElementById('targetChipsOrg');
+  const jobWrap = document.getElementById('targetChipsJob');
+  TARGETS.forEach(t=>{
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'target-chip';
+    chip.textContent = t.name;
+    chip.addEventListener('click', ()=>selectTarget(t.id));
+    (t.group === 'org' ? orgWrap : jobWrap).appendChild(chip);
+  });
+}
+
+function selectTarget(id){
+  const t = TARGETS.find(x=>x.id===id);
+  if(!t) return;
+  document.querySelectorAll('.target-chip').forEach(el=>{
+    el.classList.toggle('active', el.textContent === t.name);
+  });
+  const basisClass = t.confirmed ? 'confirmed' : 'general';
+  const basisText = t.confirmed ? '✓ 실제 채용정보 기반' : '△ 업계 통용 조합 (일반화)';
+  document.getElementById('targetResult').innerHTML = `
+    <div class="card career-ok">
+      <div class="card-top">
+        <div class="card-title">${t.name}</div>
+      </div>
+      <div class="target-basis ${basisClass}">${basisText}</div>
+      <div class="target-cert-row">
+        ${t.core.map(c=>`<span class="target-cert core">${c}</span>`).join('')}
+        ${t.sub.map(c=>`<span class="target-cert sub">${c}</span>`).join('')}
+      </div>
+      <div class="card-desc" style="margin-top:10px;">${t.note}</div>
+      <div class="card-basis">근거 · <b>${t.source}</b></div>
+    </div>
+  `;
+}
+
+renderTargetChips();
 
 function getChecked(){
   const set = new Set();
